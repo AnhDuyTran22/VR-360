@@ -1,0 +1,143 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>krpano - Virtual Tour</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="x-ua-compatible" content="IE=edge" />
+    <style>
+        /* Tổng quan */
+        html, body { 
+            height: 100%; 
+            margin: 0; 
+            overflow: hidden; 
+            font-family: Arial, Helvetica, sans-serif; 
+            font-size: 16px; 
+            color: #FFFFFF; 
+            background-color: #000000; 
+        }
+
+        /* Thanh điều hướng */
+        .w3-top {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.9); 
+            z-index: 1000;
+            padding: 10px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: center; /* Căn giữa menu */
+            align-items: center;
+        }
+
+        .w3-bar {
+            display: flex;
+            gap: 20px;
+        }
+
+        .w3-bar-item {
+            padding: 10px 20px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .w3-bar-item:hover {
+            background-color: #444;
+            color: #FFD700;
+            border-radius: 5px;
+        }
+
+        /* Danh sách phòng (dropdown menu) */
+        .dropdown {
+    	position: relative;
+    	display: flex;
+    	align-items: center; /* Đảm bảo căn giữa theo chiều dọc */
+		}
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%; /* Hiện menu ngay dưới nút */
+            background-color: #333;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+            z-index: 10;
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 8px 16px;
+            text-decoration: none;
+            color: white;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #444;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block; /* Hiện danh sách khi hover */
+        }
+
+        #pano {
+            margin-top: 60px;
+            width: 100%;
+            height: calc(100% - 60px);
+        }
+    </style>
+</head>
+<body>
+
+<!-- Thanh điều hướng -->
+<div class="w3-top">
+    <div class="w3-bar">
+        <a href="#home" class="w3-bar-item">Home</a>
+        <a href="#about" class="w3-bar-item">About</a>
+        
+        <!-- Danh sách phòng -->
+        <div class="dropdown">
+            <a href="#" class="w3-bar-item">Rooms</a>
+            <div class="dropdown-content">
+                <a href="#" onclick="changeRoom('phong-khach.xml')">Phòng khách</a>
+                <a href="#" onclick="changeRoom('phong-bep.xml')">Phòng bếp</a>
+                <a href="#" onclick="changeRoom('phong-ngu.xml')">Phòng ngủ</a>
+            </div>
+        </div>
+
+        <a href="#contact" class="w3-bar-item">Contact</a>
+    </div>
+</div>
+
+<!-- Phần hiển thị panorama -->
+<div id="pano">
+    <noscript>
+        <table style="width:100%;height:100%;">
+            <tr style="vertical-align:middle;">
+                <td>
+                    <div style="text-align:center;">ERROR:<br/><br/>Javascript not activated<br/><br/></div>
+                </td>
+            </tr>
+        </table>
+    </noscript>
+    <script src="tour.js"></script>
+    <script>
+        embedpano({xml: "tour.xml", target: "pano", passQueryParameters: "startscene,startlookat"});
+
+        // Hàm thay đổi phòng
+        function changeRoom(roomFile) {
+            embedpano({xml: roomFile, target: "pano", passQueryParameters: "startscene,startlookat"});
+        }
+    </script>
+</div>
+
+</body>
+</html>
